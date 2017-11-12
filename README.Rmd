@@ -10,4 +10,4 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-This is the .Rmd file for the final project.
+This is the .Rmd file for the final project. Justin Change
