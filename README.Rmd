@@ -10,13 +10,4 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-<<<<<<< HEAD
-This is the .Rmd file for the final project. Justin Change 2.0
-=======
-This is the .Rmd file for the final project.  Blah blah blah
-<<<<<<< HEAD
-
-bluh bluh bluh
-=======
->>>>>>> 9881875d2d13b4e6fc95162cb448e13f0173f86a
->>>>>>> 410aab8428cc4747e82b932e3bfb440022f25781
+This is the .Rmd file for the final project. Andrew
