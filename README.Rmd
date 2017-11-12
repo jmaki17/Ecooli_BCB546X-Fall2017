@@ -1,0 +1,13 @@
+---
+title: "final_project"
+author: "Sort of Justin"
+date: "November 12, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is the .Rmd file for the final project.
