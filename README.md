@@ -1,3 +1,3 @@
-# Final_Project
-
-This is the README for our final project
+# Team E. cooli's final project directory README guide
+#### Andrew Wiese | Conard Lee | Joel Maki | Justin Anast  
+----
