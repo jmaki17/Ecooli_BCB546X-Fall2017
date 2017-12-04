@@ -4,7 +4,7 @@
 ----
 
 ## 1. Commented Code Directory for Replication
-#### ⋅⋅⋅ This directory contains all ` code ` with used in our partial replication of the study
+#### ⋅⋅⋅ This directory contains all ` code ` we used in our partial replication of the study
 
 ## 2. Data Directory
 #### ⋅⋅⋅ Test indent
