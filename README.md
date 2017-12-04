@@ -14,7 +14,15 @@
 #### &nbsp; &nbsp; &nbsp; &nbsp;  This directory contains the final project instructions both .md and .pdf files
 
 ## 4. Heshiki et al. 2017.md 
-#### &nbsp; &nbsp; &nbsp; &nbsp;  This is a markdown file that contains an introduction to the [paper]([https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full)) 
+#### &nbsp; &nbsp; &nbsp; &nbsp;  This is a markdown file that contains an introduction to the [paper]([https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full)), a walk through of the technical details of our replication of the analysis, and a summary of our replication of part of the paper results.
 
+## 5. HKBanknotes.pptx 
+#### &nbsp; &nbsp; &nbsp; &nbsp; This is the PowerPoint that we will present in class that summarizes our project
+
+## 6. README.md
+#### &nbsp; &nbsp; &nbsp; &nbsp; This is a markdown file that's main goal is to help you navigate our project repository
+
+## 7. Workflow for Final Project.wordx
+####  &nbsp; &nbsp; &nbsp; &nbsp; This is a word document that's goal was to help us work through what they did in the paper
 
 
