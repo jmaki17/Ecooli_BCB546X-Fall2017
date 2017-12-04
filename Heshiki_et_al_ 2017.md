@@ -4,7 +4,7 @@
 ##### Click [here]([https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00632/full)) to be directed to paper
 ---
 
-# _Contents_ 
+##  **Contents**
 
 ### 1. Introduction of Paper
 ### 2. Technical Details of Replication Analysis
