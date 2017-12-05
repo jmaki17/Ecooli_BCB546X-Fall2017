@@ -30,11 +30,11 @@ Yoshitaro Heshiki 1, Thrimendra Dissanayake 1, Tingting Zheng 1, Kang Kang 1,Ni 
 network indices revealed no statistically significant differences between sites.
 2. Their comparison of HK banknotes with other local environmental samples indicates higher bacterial diversity of banknotes.
 
-####They claim that these findings together suggest "some evidence that the high circulation of banknotes and their continuous exposure to the microbes that surrounds us may result to one of the most useful surveillance platforms for monitoring the “city’s microbiome status.”" They do mention that much more in-depth sampling is required to confirm their concluding hypothesis. 
+#### They claim that these findings together suggest "some evidence that the high circulation of banknotes and their continuous exposure to the microbes that surrounds us may result to one of the most useful surveillance platforms for monitoring the “city’s microbiome status.”" They do mention that much more in-depth sampling is required to confirm their concluding hypothesis. 
 
-#Technical Details of Replication Analysis
+# Technical Details of Replication Analysis
 
-#Summary of Replication
+# Summary of Replication
 
 
 
