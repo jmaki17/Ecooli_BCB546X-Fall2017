@@ -25,7 +25,7 @@ Yoshitaro Heshiki 1, Thrimendra Dissanayake 1, Tingting Zheng 1, Kang Kang 1,Ni 
 4. When compared to environmental samples (water, palms of hands etc..) they found that the HK banknote's microbiomes are more diverse and that the banknotes contained around half of the total genera in all the environment samples. They also found that the banknotes have a higher abundance of potential pathogenic species than the environmental samples (p = 9.6e-10). Results also showed that the banknote's micobiome had a larger abundance of antibiotic-resistance genes compared to the environmental samples (p = 6.1e-5)
 5. When comparing their samples to that of Indian banknotes they found that HK notes had significantly less abundance of potential pathogens (p = 0.0049)
 
-### Their conclusion's
+### Their conclusions
 1. Their comparative analysis of bacterial composition, pathogenic content, and resistome profile in banknotes obtained from different regions, facilities and city
 network indices revealed no statistically significant differences between sites.
 2. Their comparison of HK banknotes with other local environmental samples indicates higher bacterial diversity of banknotes.
@@ -33,6 +33,33 @@ network indices revealed no statistically significant differences between sites.
 #### They claim that these findings together suggest "some evidence that the high circulation of banknotes and their continuous exposure to the microbes that surrounds us may result to one of the most useful surveillance platforms for monitoring the “city’s microbiome status.”" They do mention that much more in-depth sampling is required to confirm their concluding hypothesis. 
 
 # Technical Details of Replication Analysis
+
+### Generation of Rarefaction Curve
+
+---
+
+install.packages() #installing packages
+
+library("permute")  #librarys required as prerequisites (spelt wrong) to vegan
+library("lattice")
+library("MASS")
+library("mgcv")
+library("tcltk")
+library("vegan")
+library("readr")
+
+hkbn_abundances <- read_csv("C:/Users/lanas/Desktop/r for final project/R_project_final/abundance table/hkbn_abundances.csv") #
+hkbn_abundances[is.na(hkbn_abundances)]<-0 #changes all the empty cells labed as NA to the number 0, Vegan must have a non-negative number placed in each cell to run.
+hkbn_abundances<- hkbn_abundances[,-1] #gitting rid of the first column, Vegan did not like our
+
+
+
+spa <- specaccum(hkbn_abundances) #messure of species richness (y axis) and sample (y axis)
+plot(spa)
+
+---
+
+
 
 # Summary of Replication
 
