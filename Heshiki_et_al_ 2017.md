@@ -22,7 +22,7 @@ Yoshitaro Heshiki 1, Thrimendra Dissanayake 1, Tingting Zheng 1, Kang Kang 1,Ni 
 1. The most abundant bacteria is the genus _Acinetobacter_ (16.27%), which harbours several potential pathogenic species.
 2. At the species level _Propionibacterium acnes_ was at the highest abundance
 3. The relative abundance of potential pathogenic species was on average 35.6%of the total bacteria of the 15 samples.
-4. When compared to environmental samples (water, palms of hands etc..) they found that the HK banknote's microbiomes are more diverse and that the banknotes contained around half of the total genera in all the environment samples. They also found that the banknotes have a higher abundance of potential pathogenic species than the environmental samples (p = 9.6e-10). Results also showed that the banknote's micobiome had a larger abundance of antibiotic-resistance genes compared to the environmental samples (p = 6.1e-5)
+4. When compared to environmental samples (water, palms of hands etc..) they found that the HK banknote microbiomes are more diverse and that the banknotes contained around half of the total genera in all the environment samples. They also found that the banknotes have a higher abundance of potential pathogenic species than the environmental samples (p = 9.6e-10). Results also showed that the banknote micobiomes had a larger abundance of antibiotic-resistance genes compared to the environmental samples (p = 6.1e-5)
 5. When comparing their samples to that of Indian banknotes they found that HK notes had significantly less abundance of potential pathogens (p = 0.0049)
 
 ### Their conclusions
