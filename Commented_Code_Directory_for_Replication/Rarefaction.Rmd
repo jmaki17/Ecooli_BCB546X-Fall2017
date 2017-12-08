@@ -1,0 +1,37 @@
+---
+title: "Rarefaction_Generation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Rarefaction
+
+This is the code used for generating the species accumulation curve.
+
+```{r}
+install.packages("permute", "lattice", "lattice", "MASS", "mgcv", "tcltk", "vegan", "readr") #installing packages
+
+library("permute")  #librarys required as prerequisites (spelt wrong) to vegan
+library("lattice")
+library("MASS")
+library("mgcv")
+library("tcltk")
+library("vegan")
+library("readr")
+
+
+hkbn_hosps_env_metro_abundances <- read_csv("C:/Users/jmanast.IASTATE/Downloads/hkbn_hosps_env_metro_abundances.csv")
+
+
+
+hkbn_hosps_env_metro_abundances[is.na(hkbn_hosps_env_metro_abundances)]<-0 #changes all the empty cells labed as NA to the number 0, Vegan must have a non-negative number placed in each cell to run.
+hkbn_hosps_env_metro_abundances <- hkbn_hosps_env_metro_abundances[,-1] #gitting rid of the first column, Vegan did not like our
+
+
+
+spa <- specaccum(hkbn_hosps_env_metro_abundances, "collector") #messure of species richness (y axis) and sample (y axis), collector tells vegan to read and plot in order data is in dataframe
+plot(spa, main="Species Accumilation Curve or Rare Faction Curve", ylab ="Richness") #ploting spa
+```
