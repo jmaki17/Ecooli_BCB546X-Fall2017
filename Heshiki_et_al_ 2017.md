@@ -36,6 +36,8 @@ network indices revealed no statistically significant differences between sites.
 
 ### File Acquisition, Inspection, Cleaning
 
+The first step in the technical processing of this data is the acquisition of files by accession number using SRA toolkit.
+
 ---
 
 sratoolkit.2.8.2-1-mac64/bin/fastq-dump SRR5312479	#Downloading the hospital reads as a fastq file using the SRA toolkit provided through NCBI
