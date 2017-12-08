@@ -22,7 +22,9 @@
 ## 6. README.md
 #### &nbsp; &nbsp; &nbsp; &nbsp; This is a markdown file that's main goal is to help you navigate our project repository
 
-## 7. Workflow for Final Project.wordx
-####  &nbsp; &nbsp; &nbsp; &nbsp; This is a word document that's goal was to help us work through what they did in the paper
-
+##7. Work Breakdown
+####Justin downloaded the files from the SRA using the accession numbers provided in the paper. He also used the Vegan package in R to generate the species abundance curve from the paper. He also helped editing/updating the Github repository.
+####Conard attempted to run the DIAMOND package. He created the powerpoint, as well as assisting in the curation of the Github repository. Tried to learn virtual environments for Python (eventually gave up). 
+####Joel helped to conduct initial Fastq quality analysis and trimming. He also ran the cleaned Fastq files through the MetaPhlAn analyses and generated the heatmap-dendrogram figure from the paper.
+####Andrew learned how to use Megan5 (which we never actually used). He also compiled the commented code and drafted the technical documentation. He was also the main curator of the Github repository and organized the edited/updated files into a clean Github repository.
 
