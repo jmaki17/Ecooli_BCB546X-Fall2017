@@ -360,7 +360,7 @@ write.csv(hosp6_merged_df,'hkbn_hosps_env_metro_abundances.csv')
 
 install.packages("permute", "lattice", "lattice", "MASS", "mgcv", "tcltk", "vegan", "readr") #installing packages
 
-library("permute")  #librarys required as prerequisites (spelt wrong) to vegan
+library("permute")  #libraries required as prerequisites to vegan
 library("lattice")
 library("MASS")
 library("mgcv")
@@ -388,7 +388,7 @@ plot(spa, main="Species Accumilation Curve/Rarefaction Curve", ylab ="Richness")
 # Summary of Replication
 
 
-Due to time limitations and lack of documentation, it was only possible for us to  make use of a subset of the data to generate relevant figures.
+Due to time and space limitations and lack of documentation, it was only possible for us to  make use of a subset of the data to generate relevant figures.  Two figures of note were the result of our work.  The first, a heat map representing abundance of microbes present in samples taken from particular locations, was generated using MetaPhlAn.
 
 
 
