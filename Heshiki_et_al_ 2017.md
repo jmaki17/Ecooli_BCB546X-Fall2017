@@ -36,7 +36,7 @@ network indices revealed no statistically significant differences between sites.
 
 ### File Acquisition, Inspection, Cleaning
 
-The first step in the technical processing of this data is the acquisition of files by accession number using SRA toolkit.
+The first step in the technical processing of this data is the acquisition of files by accession number using SRA toolkit, allowing us to acquire them as fastq files.
 
 ---
 
@@ -354,7 +354,7 @@ write.csv(hosp6_merged_df,'hkbn_hosps_env_metro_abundances.csv')
 
 ---
 
-### Generation of Rarefaction Curve in VEGAN R
+### Generation of Rarefaction/Species Accumulation Curve in VEGAN R
 
 ---
 
@@ -374,12 +374,12 @@ hkbn_hosps_env_metro_abundances <- read_csv("C:/Users/jmanast.IASTATE/Downloads/
 
 
 hkbn_hosps_env_metro_abundances[is.na(hkbn_hosps_env_metro_abundances)]<-0 #changes all the empty cells labed as NA to the number 0, Vegan must have a non-negative number placed in each cell to run.
-hkbn_hosps_env_metro_abundances <- hkbn_hosps_env_metro_abundances[,-1] #gitting rid of the first column, Vegan did not like our
+hkbn_hosps_env_metro_abundances <- hkbn_hosps_env_metro_abundances[,-1] #gitting rid of the first column, Vegan did not like our rownames
 
+new_merged_df<-hosp6_merged_df[c("Hospital", "Hospital_6", "Metro", "Environment"), ]
 
-
-spa <- specaccum(hkbn_hosps_env_metro_abundances, "collector") #messure of species richness (y axis) and sample (y axis), collector tells vegan to read and plot in order data is in dataframe
-plot(spa, main="Species Accumilation Curve or Rare Faction Curve", ylab ="Richness") #ploting spa
+spa <- specaccum(new_merged_df, "collector") #measure of species richness (y axis) and sample (y axis), collector tells vegan to read and plot in order data is in dataframe
+plot(spa, main="Species Accumilation Curve/Rarefaction Curve", ylab ="Richness") #ploting spa
 
 ---
 
@@ -388,7 +388,7 @@ plot(spa, main="Species Accumilation Curve or Rare Faction Curve", ylab ="Richne
 # Summary of Replication
 
 
-
+Due to time limitations and lack of documentation, it was only possible for us to  make use of a subset of the data to generate relevant figures.
 
 
 
