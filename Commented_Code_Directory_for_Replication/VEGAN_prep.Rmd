@@ -1,0 +1,181 @@
+---
+title: "Vegan_Prep"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Preparation of files for rarefaction curve generation.
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+install.packages("splitstackshape")
+library(splitstackshape)
+	## importing dplyr and tidyr to get the files into the right format
+hosp <- as.data.frame(HK_hosp_real)
+colnames(hosp) <- c("taxa", "per_abund")
+	## adding column headings
+hosp_columns <- cSplit(hosp, "taxa", "|")
+	## splitting the string "taxa" into individual columns for kingdom, phylum....species
+na.omit(hosp_columns) -> hosp_columns
+hosp_columns$abundance <- hosp_columns$per_abund*.01*2070
+	## extrapolating the abundance counts from the abundance percentages and the number
+	## of taxa "hits"
+round(hosp_columns$abundance) ->hosp_columns$abundance
+	## rounding the count to the nearest whole number
+hosp_columns <- hosp_columns[ ,-c(1:7)]
+	## removing all the columns that are not abundance and species
+
+trans_hosp = data.frame(t(hosp_columns[,-1]))
+colnames(trans_hosp) <- hosp_columns[,hosp_columns$taxa_7] 
+row.names(trans_hosp) <- "Hospital"
+##
+
+	## Repeat with the Metro Data
+metro <- as.data.frame(HK_metro_real)
+colnames(metro) <- c("taxa", "per_abund")
+	## adding column headings
+metro_columns <- cSplit(metro, "taxa", "|")
+	## splitting the string "taxa" into individual columns for kingdom, phylum....species
+na.omit(metro_columns) -> metro_columns
+metro_columns$abundance <- metro_columns$per_abund*.01*157815
+	## extrapolating the abundance counts from the abundance percentages and the number
+	## of taxa "hits"
+round(metro_columns$abundance) ->metro_columns$abundance
+	## rounding the count to the nearest whole number
+metro_columns <- metro_columns[ ,-c(1:7)]
+
+trans_metro = data.frame(t(metro_columns[,-1]))
+colnames(trans_metro) <- metro_columns[,metro_columns$taxa_7]
+row.names(trans_metro) <- "Metro"
+
+	## merging the 2 dataframes into 1 super dataframe for species accumulation goodness
+fastmerge <- function(d1, d2) {
+  d1.names <- names(d1)
+  d2.names <- names(d2)
+  
+  # columns in d1 but not in d2
+  d2.add <- setdiff(d1.names, d2.names)
+  
+  # columns in d2 but not in d1
+  d1.add <- setdiff(d2.names, d1.names)
+  
+  # add blank columns to d2
+  if(length(d2.add) > 0) {
+    for(i in 1:length(d2.add)) {
+      d2[d2.add[i]] <- NA
+    }
+  }
+  
+  	# add blank columns to d1
+  if(length(d1.add) > 0) {
+    for(i in 1:length(d1.add)) {
+      d1[d1.add[i]] <- NA
+    }
+  }
+  
+  return(rbind(d1, d2))
+}
+	## Using a fastmerge function I found on stack overflow
+fastmerge(trans_hosp, trans_metro) ->merged_df
+	## generating a merged abundance table for importing into vegan
+
+write.csv(merged_df,'hkbn_abundances.csv')
+
+adding metro environmental samples to abundance data
+Env <- as.data.frame(Metro_environmental_abundance)
+Env_columns <- cSplit(Env, "X1", ",")
+	## splitting the column that contains both the abundance data and the kingdom level
+
+Env_columns[Env_columns$X7 == "s__"] <- NA
+	## Changing rows not at the species level to NA's
+Env_columns$species<- with(Env_columns, paste0(X6, X7))
+Env_columns[Env_columns$species == "NANA"] <- NA
+na.omit(Env_columns) -> Env_columns
+Env_columns$species<-sub("s__","_", Env_columns$species)
+Env_columns$species<-sub("g","s", Env_columns$species)
+Env_columns$species<-sub("[*]","*", Env_columns$species)
+	## removing non-species level data and getting the naming conventions the same
+	## between the 2 files
+Env_columns_new <- Env_columns[ ,-c(1:6,8)]
+Env_columns_new[,c("species", "X1_1")] -> Env_columns_new
+	## removing all the columns that are not species or abundance and rearranging
+trans_env = data.frame(t(Env_columns_new[,-1]))
+	## transposing the environmental samples
+colnames(trans_env) <- Env_columns[,Env_columns$species]
+	## setting column names to the species
+
+row.names(trans_env) <- "Environment"
+	## changing the row names
+
+
+	## removing names from the column headings of the trans_env_cut df
+library(plyr)
+
+rbind.fill(trans_env, merged_df) ->env_merged_df
+	## Using rbind.fill to append the environmental samples to the merged dataframe
+	## containing the merged metro and hospital abundance data
+rownames(env_merged_df) <- c("Environment", "Hospital", "Metro")
+	## changing the row names to reflect the datasets they are associated with
+write.csv(env_merged_df,'hk_metro_air_environment_abundances.csv')
+
+
+	## adding hospital6 data in
+library(readr)
+HK_hosp6_real <- read_delim("~/metaphlan/metaphlan_results/HK_hosp6_real.txt", 
+                            "\t", escape_double = FALSE, trim_ws = TRUE)
+View(HK_hosp6_real)
+	## importing hospital6 dataframe
+hosp6 <- as.data.frame(HK_hosp6_real)
+colnames(hosp6) <- c("taxa", "per_abund")
+	## adding column headings
+hosp6_columns <- cSplit(hosp6, "taxa", "|")
+	## splitting the string "taxa" into individual columns for kingdom, phylum....species
+na.omit(hosp6_columns) -> hosp6_columns
+hosp6_columns$abundance <- hosp6_columns$per_abund*.01*9048
+	## extrapolating the abundance counts from the abundance percentages and the number
+	## of taxa "hits" from the unix command
+round(hosp6_columns$abundance) ->hosp6_columns$abundance
+	## rounding the count to the nearest whole number
+hosp6_columns <- hosp6_columns[ ,-c(1:7)]
+
+trans_hosp6 = data.frame(t(hosp6_columns[,-1]))
+colnames(trans_hosp6) <- hosp6_columns[,hosp6_columns$taxa_7]
+row.names(trans_hosp6) <- "Hospital_6"
+
+	## merging the 2 dataframes into 1 super dataframe for species accumulation goodness
+fastmerge <- function(d1, d2) {
+  d1.names <- names(d1)
+  d2.names <- names(d2)
+  
+  # columns in d1 but not in d2
+  d2.add <- setdiff(d1.names, d2.names)
+  
+  # columns in d2 but not in d1
+  d1.add <- setdiff(d2.names, d1.names)
+  
+  # add blank columns to d2
+  if(length(d2.add) > 0) {
+    for(i in 1:length(d2.add)) {
+      d2[d2.add[i]] <- NA
+    }
+  }
+  
+  # add blank columns to d1
+  if(length(d1.add) > 0) {
+    for(i in 1:length(d1.add)) {
+      d1[d1.add[i]] <- NA
+    }
+  }
+  
+  return(rbind(d1, d2))
+}
+	## Using a fastmerge function I found on stack overflow
+fastmerge(trans_hosp6, env_merged_df) ->hosp6_merged_df
+	## generating a merged abundance table for importing into vegan
+
+write.csv(hosp6_merged_df,'hkbn_hosps_env_metro_abundances.csv')
+	## writing a CSV
+```

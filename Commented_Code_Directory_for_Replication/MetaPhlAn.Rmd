@@ -1,0 +1,96 @@
+---
+title: "MetaPhlAn_Relative_Abundance"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Preparing MetaPhlAn and using to plot a heatmap.
+```{R}
+wget https://bitbucket.org/nsegata/metaphlan/get/default.tar.bz2
+tar xjvf default.tar.bz2
+mv *-metaphlan-* metaphlan
+	# Downloading MetaPhlan package and decompressing
+
+cd metaphlan
+mkdir hkbanknotes
+	# Making a new directory in the metaphlan folder to store the fastq files
+
+brew install bowtie2
+	# install bowtie2 because it is needed for metaphlan
+
+mv hosp_clean.fq metaphlan/hkbanknotes/
+mv metro_clean.fq metaphlan/hkbanknotes/
+	# move the files into the hkbanknotes folder in metaphlan
+  
+brew install python
+conda search python
+conda install python=2.7.8
+	# revert to python 2.7.8 (required to run metaphlan)
+
+mkdir metaphlan_results
+	# make a directory for the metaphlan output
+
+metaphlan joelmaki$ $ python metaphlan.py hkbanknotes/hosp_clean.fq --bowtie2db bowtie2db/mpa --nproc 5 --bowtie2out hosp_metagenome.bt2out.txt > metaphlan_results/HK_hosp_real.txt
+	# This command aligns the reads to the metahlan’s database, which is then able to generate an abundance table giving the relative abundances of the various OTUs within the datatable. This is nice because this abundance table can be used to generate figures (rarefaction curves, etc.) using the R package Vegan. Metaphlan uses the program bowtie2 to align the sequences with the reference database. Metaphlan requires you to be working in a python >2.6 environment but not python 3 (issues with tabs).
+
+	# Repeat script with the metrostation fastq this time
+
+wc -l hosp_metagenome.bt2out.txt
+	# determining the number of taxon “hits” in the dataset for creation of an abundance table in R (2070)
+
+
+metaphlan joelmaki $ python metaphlan.py hkbanknotes/metro_clean.fq --bowtie2db bowtie2db/mpa --nproc 5 --bowtie2out metro_metagenome.bt2out.txt > metaphlan_results/HK_metro_real.txt
+
+wc -l metro_metagenome.bt2out.txt
+	# determining the number of taxon “hits” in the dataset for creation of an abundance table in R (157815)
+
+
+mkdir figures
+	# make a directory for the figures about to be generated 
+utils/merge_metaphlan_tables.py metaphlan_results/*.txt > figures/merged_abundance_table.txt
+	# produce an output table that contains the relative abundances with the otus as rows and the sample as the columns
+
+plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry --top 25 -s log --in figures/merged_abundance_table.txt --out figures/abundance_heatmap.png
+	# generates (somewhat) of a heatmap. The dendrogram of the microbes present is facing the wrong way. This seems to have been an issue that hasn’t been resolved since the package hasn’t been updated since 2014. We still get somewhat of a heatmap though so that’s pretty neat.
+
+plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry -f braycurtis --top 25 -s log --in figures/merged_abundance_table.txt --out figures
+abundance_heatmap_2.png
+-got the dendrogram lines to show up, but they’re still backwards (might have to go into photoshop and mirror the dendrogram) <- this is exactly what I did
+
+	# Hospital 6 scripts:
+	# After going through the analysis, we decided to arbitrarily run another (small) sample to generate a better species accumulation curve and to determine whether our initial (hospital 11) sample was corrupted (it gave a very small output)
+
+sratoolkit.2.8.2-1-mac64/bin/fastq-dump SRR5312484
+	# downloading the hosp_6 reads using the sra toolkit
+mv SRR5312484.fastq hosp6.fastq
+	# Renaming the SRR for hospital 6
+
+./FastQC/fastqc hosp6.fastq
+	# checking the quality of the hosp6 reads
+
+bbmap/bbduk.sh in=hosp6.fastq out=hosp6_clean.fq ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
+	# trimming the fastq seqs using the bbduk function in bbmap (this should remove the adaptors from the Illumina sequencing and trim any low-quality reads)
+
+mv hosp6_clean.fq metaphlan/hkbanknotes/
+	# moving hosp6_clean.fq into the hkbanknotes folder within metaphlan
+
+cd metaphlan
+	# change working directory to metaphlan
+
+python metaphlan.py hkbanknotes/hosp6_clean.fq --bowtie2db bowtie2db/mpa --nproc 5 --bowtie2out hosp6_metagenome.bt2out.txt > metaphlan_results/HK_hosp6_real.txt
+	# running metaphlan on the hosp6 data
+
+utils/merge_metaphlan_tables.py metaphlan_results/*.txt > figures/merged_abundance_table.txt
+	# merging the abundance table from hosp6 with hosp11 and the metrostation
+
+plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry -f braycurtis --top 25 -s log --in figures/merged_abundance_table.txt --out figures/abundance_heatmap_3.png
+	# plotting the heatmap dendrogram, the dendrogram is still backwards but it looks right so that’s neat
+
+wc -l hosp6_metagenome.bt2out.txt
+	# determining the number of taxon “hits” in the dataset for creation of an abundance table in R (9048)
+
+```
+

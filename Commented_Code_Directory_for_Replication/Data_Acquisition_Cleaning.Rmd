@@ -1,0 +1,50 @@
+---
+title: "Data_Aquisition_Cleaning"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Code to acquire, inspect, and clean files.  Run in git.
+```{R}
+sratoolkit.2.8.2-1-mac64/bin/fastq-dump SRR5312479	#Downloading the hospital reads as a fastq file using the SRA toolkit provided through NCBI
+
+mv SRR5312479.fastq Hospital_11_raw.fastq	# renaming the hospital file to something a little less awful
+
+	# Do same with Metro1:
+sratoolkit.2.8.2-1-mac64/bin/fastq-dump SRR5312476
+mv SRR5312476.fastq Metrostation_01.fastq
+
+	# Analyzing sequences:
+	# To run this you need to have the JDK environment available. To do this, you must go to Java.com and select the “see all java downloads”. On the next page, select the “looking for JDK?” option on the left side of the page. Then select 
+curl -O http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.10.1.zip
+unzip fastqc_v0.10.1.zip
+cd FastQC/
+chmod +x fastqc
+cd ..
+
+	# installing FASTQC for visualizing sequences and unzipping
+	# if you already have this loaded then you can disregard this step
+
+	# Taking a look at the sequence read quality
+./FastQC/fastqc Hospital_11_raw.fastq
+./FastQC/fastqc Metrostation_01.fastq
+	# The hospital_11 reads look to be pretty good quality but tail off slightly at the end, the Metro reads are also fairly good quality but seem to tail off sharply at the end, will attempt to trim off the adaptors to increase the sequence quality
+
+	# installing BBMerge from source forge
+wget http://downloads.sourceforge.net/project/bbmap/BBMap_37.68.tar.gz
+tar zvxf BBMap_37.68.tar.gz
+	# used wget to download bbmap from sourcefourge, then unzipped the file
+
+bbmap/bbduk.sh in=Metrostation_01.fastq out=metro_clean.fq ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
+	# trimming the Metrostation interleaved file, outputting a metro_clean.fq file
+
+./FastQC/fastqc metro_clean.fq
+	# compare the fastqc outputs and check for improvement (see a slight improvement between the 2 sets)
+
+	# repeat with the hospital files
+bbmap/bbduk.sh in=Hospital_11_raw.fastq out=hosp_clean.fq ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
+./FastQC/fastqc hosp_clean.fq
+```
