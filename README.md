@@ -8,7 +8,7 @@
 #### &nbsp; &nbsp; &nbsp; &nbsp;  This directory contains all ` code ` we used in our partial replication of the study
 
 ## 2. Data Directory
-#### &nbsp; &nbsp; &nbsp; &nbsp;  This Directory contains data we generated and links to the original Sequence Archive Data base files. Most files are by far to large to post. Therefore a word .doc containing links to the SRA fasta and fastq files will be provided.
+#### &nbsp; &nbsp; &nbsp; &nbsp;  This Directory contains data we generated and links to the original Sequence Archive Data base files. Most files are by far too large to post. Therefore a word .doc containing links to the SRA fasta and fastq files will be provided.
 
 ## 3. Final project instructions (directory)
 #### &nbsp; &nbsp; &nbsp; &nbsp;  This directory contains the final project instructions both .md and .pdf files
