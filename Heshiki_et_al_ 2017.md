@@ -388,7 +388,7 @@ plot(spa, main="Species Accumilation Curve/Rarefaction Curve", ylab ="Richness")
 # Summary of Replication
 
 
-Due to time and space limitations and lack of documentation, it was only possible for us to  make use of a subset of the data to generate relevant figures.  Two figures of note were the result of our work.  The first, a heat map representing abundance of microbes present in samples taken from particular locations, was generated using MetaPhlAn.
+###  &nbsp; &nbsp; &nbsp; &nbsp;Due to time and space limitations and lack of documentation, it was only possible for us to  make use of a subset of the data to generate relevant figures.  Two figures of note were the result of our work.  The first, a heat map representing abundance of microbes present in samples taken from particular locations, was generated using MetaPhlAn instead of Diamond as initially proposed by the paper.  The second, a rarefaction curve, used information taken from the work with MetaPhlAn and the vegan R package.
 
 
 
