@@ -36,7 +36,8 @@ network indices revealed no statistically significant differences between sites.
 
 ### File Acquisition, Inspection, Cleaning
 
-The first step in the technical processing of this data is the acquisition of files by accession number using SRA toolkit, allowing us to acquire them as fastq files.
+The first step in the technical processing of this data is the acquisition of files by accession number using SRA toolkit, allowing us to acquire them as fastq files.  FASTQC is used to visualize the files, and the files are cleaned for further analysis.  Files are NOT split into Forward and Reverse reads, as this is unneeded using our methods.
+A slight improvement is noticed following file cleaning, allowing us to move on to the next step in data analysis and plotting.
 
 ---
 
@@ -84,6 +85,9 @@ bbmap/bbduk.sh in=Hospital_11_raw.fastq out=hosp_clean.fq ref=adapters.fa ktrim=
 
 
 ### MetaPhlAn and Relative Abundance
+Due to issues with DIAMOND requiring a large, unwieldy database download for use, the plan for applying it in later steps was discarded.  Instead, MetaPhlAn and vegan were used to generate necessary plots.  Python 3 does not work with our version of MetaPhlAn, requiring downloading of 2.7.
+
+Below, MetaPhlAn is used to generate an abundance table and output it to a separate file.  The output table is then used in the generation of a heatmap.  Due to some issues with MetaPhlAn that have yet to be addressed, the reversed dendrogram generated with the heatmap had to be manually mirrored.  An additional small sample was added after this point using the same system in order to generate a more insightful accumulation curve.
 
 ---
 
@@ -140,7 +144,7 @@ plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry --top 25 -s log --in figur
 
 plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry -f braycurtis --top 25 -s log --in figures/merged_abundance_table.txt --out figures
 abundance_heatmap_2.png
--got the dendrogram lines to show up, but they’re still backwards (might have to go into photoshop and mirror the dendrogram) <- this is exactly what I did
+	# got the dendrogram lines to show up, but they’re still backwards (might have to go into photoshop and mirror the dendrogram) <- this is exactly what I did
 
 	# Hospital 6 scripts:
 	# After going through the analysis, we decided to arbitrarily run another (small) sample to generate a better species accumulation curve and to determine whether our initial (hospital 11) sample was corrupted (it gave a very small output)
@@ -272,12 +276,9 @@ Env_columns$species<-sub("[*]","*", Env_columns$species)
 	## removing non-species level data and getting the naming conventions the same
 	## between the 2 files
 Env_columns_new <- Env_columns[ ,-c(1:6,8)]
-Env_columns_new[,c("species", "X1_1")] -> Env_columns_new
-	## removing all the columns that are not species or abundance and rearranging
-trans_env = data.frame(t(Env_columns_new[,-1]))
-	## transposing the environmental samples
-colnames(trans_env) <- Env_columns[,Env_columns$species]
-	## setting column names to the species
+Env_columns_new[,c("species", "X1_1")] -> Env_columns_new	## removing all the columns that are not species or abundance and rearranging
+trans_env = data.frame(t(Env_columns_new[,-1]))	## transposing the environmental samples
+colnames(trans_env) <- Env_columns[,Env_columns$species]	## setting column names to the species
 
 row.names(trans_env) <- "Environment"
 	## changing the row names
