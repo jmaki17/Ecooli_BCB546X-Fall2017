@@ -89,6 +89,8 @@ Due to issues with DIAMOND requiring a large, unwieldy database download for use
 
 Below, MetaPhlAn is used to generate an abundance table and output it to a separate file.  The output table is then used in the generation of a heatmap.  Due to some issues with MetaPhlAn that have yet to be addressed, the reversed dendrogram generated with the heatmap had to be manually mirrored.  An additional small sample was added after this point using the same system in order to generate a more insightful accumulation curve.
 
+Bowtie2 was used to align data to the 3000 genome database in MetaPhlAn in order to output relative abundance data at different taxa levels.
+
 ---
 
 wget https://bitbucket.org/nsegata/metaphlan/get/default.tar.bz2
@@ -181,6 +183,7 @@ wc -l hosp6_metagenome.bt2out.txt
 ---
 
 ### Preparation of Files for VEGAN
+The following section details the generation of data files for use with vegan for the production of a rarefaction curve.  Broadly, this involves the generation of abundance tables, writing them into csv files so that the vegan package can process them appropriately.
 
 ---
 
@@ -308,8 +311,7 @@ hosp6_columns <- cSplit(hosp6, "taxa", "|")
 	## splitting the string "taxa" into individual columns for kingdom, phylum....species
 na.omit(hosp6_columns) -> hosp6_columns
 hosp6_columns$abundance <- hosp6_columns$per_abund*.01*9048
-	## extrapolating the abundance counts from the abundance percentages and the number
-	## of taxa "hits" from the unix command
+	## extrapolating the abundance counts from the abundance percentages and the number of taxa "hits" from the unix command
 round(hosp6_columns$abundance) ->hosp6_columns$abundance
 	## rounding the count to the nearest whole number
 hosp6_columns <- hosp6_columns[ ,-c(1:7)]
@@ -323,10 +325,10 @@ fastmerge <- function(d1, d2) {
   d1.names <- names(d1)
   d2.names <- names(d2)
   
-  # columns in d1 but not in d2
+  	# columns in d1 but not in d2
   d2.add <- setdiff(d1.names, d2.names)
   
-  # columns in d2 but not in d1
+  	# columns in d2 but not in d1
   d1.add <- setdiff(d2.names, d1.names)
   
   # add blank columns to d2
@@ -356,6 +358,7 @@ write.csv(hosp6_merged_df,'hkbn_hosps_env_metro_abundances.csv')
 ---
 
 ### Generation of Rarefaction/Species Accumulation Curve in VEGAN R
+This section details the generation of a Rarefaction/Species Accumulation curve using the vegan package in R.  This is relatively simple, following the above preparation of the data.  The csv files are read and assigned prior to renaming of empty cells, and collector is used to make vegan plotting adhere to the dataframe order when generating the rarefaction curve.
 
 ---
 
@@ -384,7 +387,13 @@ plot(spa, main="Species Accumilation Curve/Rarefaction Curve", ylab ="Richness")
 
 ---
 
+### Additional Notes
 
+Due to issues with time, space, and documentation, the methods used above do not perfectly resemble those originally used within the paper.  Notably, DIAMOND did not see any use, nor did MEGAN5 in taxonomy profiling.  A referenced "in-house script" proved impossible to locate, making that avenue of approach unavailable.
+
+A subset of data was used, both in the interests of time and to demonstrate a proof-of-concept for later recreation of the analyses within.
+
+---
 
 # Summary of Replication
 
