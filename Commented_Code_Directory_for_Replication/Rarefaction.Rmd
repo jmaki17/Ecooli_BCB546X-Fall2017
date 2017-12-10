@@ -28,7 +28,7 @@ hkbn_hosps_env_metro_abundances <- read_csv("C:/Users/jmanast.IASTATE/Downloads/
 
 
 hkbn_hosps_env_metro_abundances[is.na(hkbn_hosps_env_metro_abundances)]<-0 #changes all the empty cells labed as NA to the number 0, Vegan must have a non-negative number placed in each cell to run.
-hkbn_hosps_env_metro_abundances <- hkbn_hosps_env_metro_abundances[,-1] #gitting rid of the first column, Vegan did not like our
+hkbn_hosps_env_metro_abundances <- hkbn_hosps_env_metro_abundances[,-1] #gitting rid of the first column, Vegan did not like our rownames
 
 
 

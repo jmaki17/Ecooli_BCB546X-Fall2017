@@ -58,7 +58,7 @@ plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry --top 25 -s log --in figur
 
 plotting_scripts/metaphlan_hclust_heatmap.py -c bbcry -f braycurtis --top 25 -s log --in figures/merged_abundance_table.txt --out figures
 abundance_heatmap_2.png
--got the dendrogram lines to show up, but they’re still backwards (might have to go into photoshop and mirror the dendrogram) <- this is exactly what I did
+# got the dendrogram lines to show up, but they’re still backwards (might have to go into photoshop and mirror the dendrogram) <- this is exactly what I did
 
 	# Hospital 6 scripts:
 	# After going through the analysis, we decided to arbitrarily run another (small) sample to generate a better species accumulation curve and to determine whether our initial (hospital 11) sample was corrupted (it gave a very small output)
