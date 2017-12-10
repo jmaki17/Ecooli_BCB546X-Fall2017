@@ -14,7 +14,7 @@ This is the code used for generating the species accumulation curve.
 ```{r}
 install.packages("permute", "lattice", "lattice", "MASS", "mgcv", "tcltk", "vegan", "readr") #installing packages
 
-library("permute")  #librarys required as prerequisites (spelt wrong) to vegan
+library("permute")  #librarys required as prerequisite to vegan
 library("lattice")
 library("MASS")
 library("mgcv")
